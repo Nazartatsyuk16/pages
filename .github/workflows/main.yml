@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: test-merge-report-demo/
+          path: Nazartatsyuk16/pages/blob/main/CNAME/
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
