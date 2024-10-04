@@ -6,9 +6,14 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 export const options = {
     scenarios: {
         ui: {
-            executor: 'per-vu-iterations',
-            vus: 1,
-            iterations: 1,
+            executor: 'ramping-vus',
+            stages: [
+                { duration: '2m', target: 30 }, // traffic ramp-up from 1 to 100 users over 5 minutes.
+                { duration: '2m', target: 30 }
+                { duration: '1m', target: 50 }, // traffic ramp-up from 1 to 100 users over 5 minutes.
+                { duration: '5m', target: 50 }, // stay at 100 users for 30 minutes
+                { duration: '2m', target: 0 }, // ramp-down to 0 users
+            ],
             options: {
                 browser: {
                     type: 'chromium',
