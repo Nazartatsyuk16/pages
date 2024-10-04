@@ -25,7 +25,9 @@ jobs:
         if: always()
         with:
           name: home_1_vu_PageLoad
-          path: home_1_vu_PageLoad.html, home_1_vu_PageLoad.json
+          path: | 
+              home_1_vu_PageLoad.html 
+              home_1_vu_PageLoad.json
           retention-days: 3
         
       # - name: Upload k6 html report
