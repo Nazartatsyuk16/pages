@@ -19,11 +19,20 @@ jobs:
         with:
           path: pageLoadTest.js
             
-      - name: Upload Playwright report
+      - name: Upload k6 html report
         id: artifact-upload-step
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: home_1_vu_PageLoad
-          path: home_1_vu_PageLoad.html
+          path: home_1_vu_PageLoad.html, home_1_vu_PageLoad.json
           retention-days: 3
+        
+      # - name: Upload k6 html report
+      # id: json-upload-step
+      # uses: actions/upload-artifact@v4
+      # if: always()
+      # with:
+      #   name: home_1_vu_PageLoad_json
+      #   path: home_1_vu_PageLoad.json
+      #   retention-days: 3
