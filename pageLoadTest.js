@@ -1,18 +1,21 @@
 import { browser } from 'k6/browser';
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+// import {stagingUrl} from "/hostName.js";
 
 
 export const options = {
     scenarios: {
         ui: {
-            executor: 'per-vu-iterations',
-            vus: 50,
-            iterations: 1,
+            executor: 'ramping-vus',
+            stages: [
+                { duration: '3m', target: 40 }, // traffic ramp-up from 1 to 100 users over 5 minutes.
+                { duration: '10m', target: 40 }, // stay at 100 users for 30 minutes
+                { duration: '3m', target: 0 }, // ramp-down to 0 users
+            ],
             options: {
                 browser: {
                     type: 'chromium',
-                    cache: false,
                     // isHeadless: false,
                 },
             },
@@ -36,14 +39,12 @@ export default async function () {
         await page.goto(`https://www.staging.conceiveabilities.com/`);
         const loadTime = Date.now() - startTime;
         console.log(loadTime);
-
     } finally {
         await page.close();
     }
 }
 
 export function handleSummary(data) {
-    // return {'mainPage.json': JSON.stringify(data)}
     return {
         "home_1_vu_PageLoad.html": htmlReport(data),
         'home_1_vu_PageLoad.json': JSON.stringify(data),
