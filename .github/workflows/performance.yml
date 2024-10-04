@@ -25,5 +25,5 @@ jobs:
         if: always()
         with:
           name: home_1_vu_PageLoad
-          path: home_1_vu_PageLoad
+          path: home_1_vu_PageLoad.html
           retention-days: 3
